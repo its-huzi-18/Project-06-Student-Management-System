@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+import chalk from "chalk";
 import inquirer from "inquirer";
 // Define the student class 
 class Student {
@@ -20,19 +21,19 @@ class Student {
      }
      // Method of view Blanace
     view_balance(){
-        console.log(`Balance for ${this.name}: $${this.balance}`);
+        console.log(`${chalk.bold.blueBright(`Balance for ${this.name}: $${this.balance}`)}`);
         
     }
     // Pay the fees
     pay_fees(amount:number){
       this.balance -=amount;
-      console.log(`$${amount} Fees is sucesssfully paid for ${this.name}`);
-      console.log(`Remaining balance is: $${this.balance}`);
+      console.log(`${chalk.bold.green(`$${amount} Fees is sucesssfully paid for ${this.name}`)}`);
+      console.log(`Remaining balance is: ${chalk.bold.green(`$${this.balance}`)}`);
       
     }
     // Method to display the Student status
     view_status(){
-        console.log(`${"-".repeat(35)}\nID: ${this.id}\nName: ${this.name}\nCourses: ${this.courses}\nBalance:${this.balance}\n${"-".repeat(35)}`);
+        console.log(`${chalk.bold.italic.green(`${chalk.white(`${"-".repeat(35)}`)}\nID: ${this.id}\nName: ${this.name}\nCourses: ${this.courses}\nBalance:${this.balance}\n${chalk.white(`${"-".repeat(35)}`)}`)}`);
         
     }
 }
@@ -47,14 +48,14 @@ class student_Manager{
     add_student(name:string){
         let student = new Student(name);
         this.students.push(student);
-        console.log(`Student: ${name} added sucessfully. Student ID:${student.id}`);
+        console.log(`Student: ${name} added sucessfully. Student ID:${chalk.bold.blue(`${student.id}`)}`);
         
     }
     enroll_student(student_id:number,course:string){
     let student = this.find_student(student_id);
     if(student){
         student.enroll_courses(course)
-        console.log(`${student.name} is enrolled in ${course} sucessfully`);
+        console.log(`${chalk.bold.green(`${student.name} is enrolled in ${chalk.bold.blue(`${course}`)} sucessfully`)}`);
     }
     }
     // find student method
@@ -68,7 +69,7 @@ class student_Manager{
         student.view_balance();
     }
     else{
-        console.log(`Student not found. Plese enter a correct student ID`);
+        console.log(`${chalk.bold.red(`Student not found. Plese enter a correct student ID`)}`);
     }
 }
 // Method to pay the student fees 
@@ -77,7 +78,7 @@ pay_fees(student_id: number, amount:number){
     if(student){
         student.pay_fees(amount)
     }else{
-      console.log(`Student not found. Plese enter a correct student ID`);
+       console.log(`${chalk.bold.red(`Student not found. Plese enter a correct student ID`)}`);
     }  
 }
 // Method to view Student Status
@@ -86,13 +87,13 @@ show_status(student_id:number){
     if(student){
         student.view_status();
     }else{
-    console.log(`Student not found. Plese enter a correct student ID`);    
+     console.log(`${chalk.bold.red(`Student not found. Plese enter a correct student ID`)}`);    
 }
  }
 }
 // Main Function to run the progrm
 async function main(){
-console.log(`Welcome to 'Governor House' - Student Management System`);
+console.log(`${chalk.bold.bold.greenBright(`Welcome to 'Governor House' - Student Management System`)}`);
 console.log("-".repeat(60));
 let studentManager = new student_Manager;
 while(true){
@@ -173,7 +174,7 @@ while(true){
                         studentManager.show_status(status_input.Student_id);
                         break;
                         case  "Exit":
-                            console.log("Exiting...");
+                            console.log(`${chalk.bold.italic.red("Exiting...")}`);
                             process.exit();                        
     }
 }
